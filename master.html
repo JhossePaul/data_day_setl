@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title></title>
+
+        <link rel="stylesheet" href="dist/reset.css">
+        <link rel="stylesheet" href="dist/reveal.css">
+        <link rel="stylesheet" href="dist/theme/simple.css">
+        <link rel="stylesheet" href="css/custom.css"> 
+
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <a href="https://setl-framework.github.io/setl/">
+                        <img src="https://setl-framework.github.io/setl/img/logo_setl.png" class="tittle-logo">
+                    </a>
+                    <h4>A simple Spark-powered ETL framework that just works</h4>
+                    <p>
+                        <small>Paul Márquez</small>
+                    </p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>ETL</h2>
+                        <figure>
+                            <img src="https://www.informatica.com/content/dam/informatica-com/en/images/misc/etl-process-explained-diagram.png" class="grayscale"/>
+                            <figcaption>https://www.informatica.com/se/resources/articles/what-is-etl.html</figcaption>
+                        </figure>
+                    </section>
+
+                    <section>
+                        <h2>ELT</h2>
+                        <figure>
+                            <img src="https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2019/12/12/ETLandELTRedshift1.png">
+                            <figcaption>https://aws.amazon.com/blogs/big-data/etl-and-elt-design-patterns-for-lake-house-architecture-using-amazon-redshift-part-1/</figcaption>
+                        </figure>
+                    </section>
+                </section>
+
+                <section>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" height="150px"/>
+                    
+                    <figure>
+                        <img src="https://spark.apache.org/docs/latest/img/cluster-overview.png" />
+                        <figcaption>https://spark.apache.org/docs/latest/cluster-overview.html</figcaption>
+                    </figure>
+                </section>
+
+                <section>
+                    <h2>SETL</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Data Access Layer</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Connectors</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Repositories</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Entities</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Factories</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Stages</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Pipelines</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Implementación y ejecución</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Spark Connector</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Spark Repository</h2>
+                    <p></p>
+                </section>
+
+                <section>
+                    <h2>Conclusiones</h2>
+                    <p></p>
+                </section>
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/notes/notes.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
+
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+                multiplex: {
+                        secret: null,
+                        socketId: "5337c5826e448b39",
+                        url: 'https://reveal-multiplex.glitch.me/'
+                },
+
+				dependencies: [
+					{ src: 'https://reveal-multiplex.glitch.me/socket.io/socket.io.js', async: true },
+					{ src: 'https://reveal-multiplex.glitch.me/master.js', async: true }
+				]
+            });
+        </script>
+    </body>
+</html>

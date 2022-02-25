@@ -1,0 +1,19 @@
+.tittle-logo {
+    margin: -100px !important;
+    height: 500px;
+    background: transparent;
+}
+
+figcaption {
+    font-size: 0.7ex;
+    color: gray;
+}
+
+img.grayscale {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.image-tittle {
+    height: 150px;
+}
