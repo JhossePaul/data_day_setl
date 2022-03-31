@@ -13,3 +13,7 @@ tmp/**
 *.iml
 *.iws
 *.eml
+
+.metals/
+.vscode/
+target/
