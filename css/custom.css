@@ -30,3 +30,13 @@ code {
     float: right;
     margin-right: 100px;
 }
+
+.data-days {
+    float: left;
+    width: 20%;
+    vertical-align: top;
+}
+
+.row {
+    display: flex;
+}
