@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title></title>
+        <title>SETL Framework</title>
 
         <link rel="stylesheet" href="dist/reset.css">
         <link rel="stylesheet" href="dist/reveal.css">
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/custom.css"> 
 
         <!-- Theme used for syntax highlighted code -->
-        <link rel="stylesheet" href="plugin/highlight/monokai.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/vs.min.css">
     </head>
     <body>
         <div class="reveal">
@@ -42,6 +42,7 @@
                             <img src="https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2019/12/12/ETLandELTRedshift1.png">
                             <figcaption>https://aws.amazon.com/blogs/big-data/etl-and-elt-design-patterns-for-lake-house-architecture-using-amazon-redshift-part-1/</figcaption>
                         </figure>
+                        <p>En algunos pasos del flujo que implementamos tuvimos que trabajar con más de 8 mil millones de datos</p>
                     </section>
                 </section>
 
@@ -55,63 +56,289 @@
                 </section>
 
                 <section>
-                    <h2>SETL</h2>
-                    <p></p>
+                    <section>
+                        <img src="https://setl-framework.github.io/setl/img/logo_setl.png" class="tittle-logo" />
+                        <p>Conceptos básicos</p>
+                    </section>
+
+                    <section>
+                        <h2>Data Access Layer</h2>
+                        <p>
+                            La DAL nos permite leer y escribir en las bases de
+                            datos. Hay dos componentes que abstraen el DAL:
+                            Connectors y Repositories
+                        </p>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Connectors</h2>
+                        <p>Es una DAL no tipada para Spark Dataframes</p>
+                        <pre>
+                            <code class="language-scala">
+trait Connector extends HasSparkSession with Logging {
+    val storage: Storage
+    def read(): DataFrame
+    def write(t: DataFrame, suffix: Option[String]): Unit
+    def write(t: DataFrame): Unit
+}
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <img src="https://mermaid.ink/img/pako:eNqdl1uP2jgUgP9KlKrSrMSg3C_TpwIz0laoXS2jPvHixE6wcGzWMe2w1fz3dRIutkMCWyMhkvOdq-1j88vOGUT2k21ZJQe7jbX8-9OarqllzRmlKBeMW4-Pj9YLJuj85lNfvpiNST_P_1yMyZ_fckRUoEE0ly02X33XrfSRL6tvX28xfwH-zx4J05-SQucN1DWgkAPdnoktDhRUzMzfpL7IF6ZDrSqdLUSE4s6e2BXiFcBQTtCvRmVtiw2q0Np-kj8hKsCeiLU9UUTfAccgI6humFanEWUg35ac7SnsVH9usEBHxUa-47gC_DBnhPGO-PA8f56_vChMjXJGoUEVckDVkkBcYB3a1OQhcSaW6zgfJ1YaTb04CJ00cfz04x_9IGaMQ8QNfS-QBqJGPxnUPwd41UJ0NuBPQy8NXDeOglgzcIr9qn5yO4BjAq_oTag1cn3Xd5xrgZqkI4fnXonIAHmZPaTT0DkOV1Z18EkNkGCKVH9-OzR_ekC6VK5EOtuW4wvkAvTWRtbW1T2KUz92FrOe2DuKgRyad8A5-7lBAI5mUDAqXkCFyaEj1muZFUfZPt8gYVV18zyxfiAOAQUTq9ktxFBf4X-PO8yNdm9q-UCGyMzYSh9Q0nwUjMqOOlKmVtymOlSInOxrOfMjlTwRqplewY79YYnpdnzSsSBoeNYRLNHyvsxB07bUoNqtG6bTyIvcKPG8wJ9Y8jGOo9CPfNdLmv0UT1PHTSMnTgJf20-dueFKtnJja2RERmkyS33dlxwd1HWLSwrIcAE6-evo1uiWBnuT0Y420TN3tcn9dqVaszcqQRjb3UAoE6gXWX9htZieqFygIYAGc3tq8A8gMKN9n1EUXScNt0Hz0XqQPNppjr7uq0yzaJ54sln17cm-Ch5cx2vOKvnlheHEcqZBqi1KIlbXdG848C6FCrTDQIB6288_9IMiy01MTz4BqQOhwTQ1X-JyI0ZCO3F3IAvAtyNTeMK-7UWNIbqDnBOcb5sLin7u-W7kmxOOXu8rjQLrBcqKPC4KhSw5Vk8P0tTJaAaQ0SumRkkzQoPLORb9LIoikcPE9NWItMllEByMRqYTbRMYmQIkD1BulCgMPTlMyOx1PSon8nLcUENXnAIT8nrYIWeoEZ4Ad-iIOwHepT_6TnD7FnnS8y96rnfRG7z8nfQCRS-O7vcXXvQe_4e7SLlh3u8sVoJMkkFvjdr7mr7LPxL7HQQCPUMsj0P7qQCkRhMb7AVbHWh-ftFRCwzkn8Hq-Pb9PzDxLmA"/>
+                    </section>
+
+                    <section>
+                        <h2>Repositories</h2>
+                        <p>Es una DAL tipado que conecta un Spark Dataset con su respectivo storage</p>
+                        <img src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggVEQ7XG4gIFJlcG9zaXRvcnktLT5TcGFya1JlcG9zaXRvcnk7IiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifSwidXBkYXRlRWRpdG9yIjpmYWxzZX0" />
+                        <p>El caso más común es un Spark Repository, el cual requiere un Connector para acceder al storage final</p>
+                    </section>
+
+                    <section>
+                        <h2>Entities</h2>
+                        <p>
+                            La representación de las entidades de nuestra base de datos debe ser clara
+                            y conscisa directamente en clases.
+                        </p>
+                        <img src="dist/table.png" class="table-example"/>
+                        <pre>
+                            <code class="language-scala">
+case class Person(name: String, age: Int)
+object Person {
+    val schema = StructType(List(
+        StructField("name", CharType(32), true),
+        StructField("age", IntegerType, true)
+    ))
+}
+                            </code>
+                        </pre>
+                        <p>
+                            El companion object nos permitió solucionar la
+                            implementación de tipos de datos que <a href="https://spark.apache.org/docs/latest/sql-ref-datatypes.html">no tienen
+                            soporte en Spark Datasets<sup>*</sup></a>.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>Factories</h2>
+                        <p>
+                            Las fábricas nos permiten implementar las
+                            transformaciones. El Pipeline puede inyectar las
+                            dependencias con el decorador <code>@Delivery</code>
+                        </p>
+
+                        <pre>
+                            <code class="language-scala">
+case class City(name: String, state: String, id: Int)
+case class Person(name: String, age: Int, city: String)
+class PeopleFactory extend Factory[Dataset[Person]] with HasSparkSession {
+    import spark.implicits._
+
+    val people: Dataset[Person] = _
+
+    @Delivery
+    val cities: Dataset[City] = _
+
+    override def read(): this.type = ...
+    override def process(): this.type = ...
+    override def write(): this.type = ...
+    override def get(): Dataset[Person] = people
+}
+
+val peopleFactory = new PeopleFactory()
+
+peopleFactory.read().process().write().get()
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Workflow Management</h2>
+                        <p>
+                            SETL nos provee de dos abstracciones para construir
+                            el workflow de transformación de datos: Stages y Pipelines
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>Stages</h2>
+                        <p>
+                            Un Stage está compuesto por un conjunto de fábricas
+                            de datos independientes que pueden ejecutarse de
+                            manera secuencial o en paralelo
+                        </p>
+                        <pre>
+                            <code class="language-scala">
+val stage = new Stage()
+val statesFactory = new StatesFactory()
+val citiesFactory = new CitiesFactory()
+
+stage
+    .parallel(true)
+    .addFactory(statesFactory)
+    .addFactory(citiesFactory)
+    .describe()
+    .run()
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Pipelines</h2>
+                        <p>
+                            Nos permiten organizar múltiples Stages en un orden
+                            específico. También puede recibir Factories y crea
+                            un Stage con una sola fábrica.
+                        </p>
+                        <pre>
+                            <code class="language-scala">
+val setl = Setl.builder.getOrCreate()
+val peopleFactory = new PeopleFactory
+val citiesFactory = new CitiesFactory
+val statesFactory = new StatesFactory
+val territoryStage = new Stage()
+
+territoryStage
+    .parallel(true)
+    .addFactory(citiesFactory)
+    .addFactory(statesFactory)
+
+setl.newPipeline().addStage(territoryStage).addStage(peopleFactory).describe().run()
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Configuración</h2>
+                        <p>
+                            Se realiza en un archivo Typesafe Config y nos
+                            permite la implementación de múltiples ambientes de
+                            ejecución
+                        </p>
+                        <pre>
+                            <code>
+# local.conf
+setl.config {
+    spark {
+        spark.master = "local[*]",
+        ...
+    }
+}
+person { ...  }
+city { ... }
+                            </code>
+                        </pre>
+                        <pre>
+                            <code class="language-scala">
+val setl: Setl = Setl.builder()
+    .withDefaultConfig()
+    .getOrCreate()
+
+setl
+    .setSparkRepository[Person]("person")
+    .newPipeline()
+    .addStage(...)
+    .describe()
+    .run()
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Features propuestos</h2>
+                        <p>
+                            En algún punto nos encontramos con la necesidad de
+                            escribir en bases on-premise en un ambiente CDP con
+                            tipos de datos específicos y sin soporte para los
+                            Spark Dataset. Se desarrollaron el Connector y el 
+                            los cambios requeridos para el SparkRepository.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>Spark Connector</h2>
+                        <p>
+                            El Spark Connector nos permite la implementación del DAL 
+                            en una sesión de Spark. Esta definción liga directamente 
+                            la configuración del ambiente de ejecución con el Connector
+                        </p>
+                        <pre>
+                            <code class="language-scala">
+class SparkSQLConnector extends ConnectorInterface with CanDrop {
+    import spark.implicits._
+
+    var schema: String = _
+    var table: String = _
+    var mode: String = _
+    var format: String = _
+    var finalName: String = _
+    var partitionBy: Option[Array[String]] = _ 
+
+    override def setConf(conf: Conf): Unit = ...
+    override def setConfig(config: Config): Unit = ...
+    override def write(data: DataFrame): Unit = ...
+    override def write(data: DataFrame, suffix: Option[String]): Unit = ...
+    private[this] def read(schema: String, table: String): DataFrame = ...
+    override def read(): DataFrame = ...
+    def create(sch: StructType): Unit = ...
+    def exists(): Boolean = ...
+    def drop(): Unit = ...
+}
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Spark Repository</h2>
+                        <p>
+                            Para poder implementar tipos de datos no soportados
+                            en Spark Dataset, recurrimos a crear el schema a
+                            mano y posteriormente a insertar los datos en la
+                            tabla correspondiente:
+                        </p>
+                        <pre>
+                            <code class="language-scala">
+object RepositoryImprovements {
+    implicit class RepositoryNewMethods[T: TypeTag](repo: SparkRepository[T]) {
+        val connector = repo.getConnector
+
+        def create(sch: StructType): SparkRepository[T] = ...
+        def saveOrCreate(
+            data: Dataset[T],
+            schema: StructType,
+            mode: String): SparkRepository[T] = ...
+    }
+}
+
+                            </code>
+                        </pre>
+                    </section>
                 </section>
 
                 <section>
-                    <h2>Data Access Layer</h2>
-                    <p></p>
-                </section>
+                    <section>
+                        <h2>Conclusiones</h2>
+                        <p>SETL nos permite:</p>
+                        <ul>
+                            <li>Trabajar un flujo de transformación de Big Data</li>
+                            <li>Encapsular las transformaciones en Factories</li>
+                            <li>Usar tipado fuerte con Spark Datasets</li>
+                            <li>Ligar Entidades del modelo de datos con clases</li>
+                            <li>Configurar múltiples ambientes de ejecución</li>
+                            <li>Controlar el flujo de ejecución del proceso</li>
+                            <li>Flexibilidad para implementar nuevos conectores y fuentes de datos</li>
+                        </ul>
+                    </section>
 
-                <section>
-                    <h2>Connectors</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Repositories</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Entities</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Factories</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Stages</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Pipelines</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Implementación y ejecución</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Spark Connector</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Spark Repository</h2>
-                    <p></p>
-                </section>
-
-                <section>
-                    <h2>Conclusiones</h2>
-                    <p></p>
+                    <section>
+                        <h2>Presentación y demo</h2>
+                        <img src="dist/qr.png" />
+                    </section>
                 </section>
             </div>
         </div>
@@ -120,26 +347,43 @@
         <script src="plugin/notes/notes.js"></script>
         <script src="plugin/markdown/markdown.js"></script>
         <script src="plugin/highlight/highlight.js"></script>
+        <script src="https://reveal-multiplex.glitch.me/socket.io/socket.io.js'"></script>
         <script>
-            // More info about initialization & config:
-            // - https://revealjs.com/initialization/
-            // - https://revealjs.com/config/
             Reveal.initialize({
                 hash: true,
 
-                // Learn about plugins: https://revealjs.com/plugins/
                 plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
 
                 multiplex: {
-                        secret: null,
-                        socketId: "90d141f03c8a90de",
-                        url: 'https://reveal-multiplex.glitch.me/'
+                    secret: null,
+                    socketId: "7f4918dab087fa8e",
+                    url: 'https://reveal-multiplex.glitch.me/'
                 },
 
-				dependencies: [
-					{ src: 'https://reveal-multiplex.glitch.me/socket.io/socket.io.js', async: true },
-					{ src: 'https://reveal-multiplex.glitch.me/client.js', async: true }
-				]
+                dependencies: [
+                    { src: 'https://reveal-multiplex.glitch.me/socket.io/socket.io.js', async: true },
+                    { src: 'https://reveal-multiplex.glitch.me/client.js', async: true }
+                ]
+            });
+
+            const multiplex = Reveal.getConfig().multiplex
+            const socketId = multiplex.id;
+	        const socket = io.connect(multiplex.url);
+
+            socket.on("connect", function () {
+                console.log("socket connected", socket.id)
+            })
+
+            socket.on("hello", "world")
+
+            socket.on("multiplex-statechanged", function(data) {
+                console.log("callback", data);
+
+                // ignore data from sockets that aren't ours
+                if (data.socketId !== socketId) { return; }
+                if( window.location.host === 'localhost:1947' ) return;
+
+                Reveal.setState(data.state);
             });
         </script>
     </body>

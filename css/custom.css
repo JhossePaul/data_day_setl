@@ -17,3 +17,16 @@ img.grayscale {
 .image-tittle {
     height: 150px;
 }
+
+code {
+    line-height: 1.2em;
+}
+
+:root {
+    --r-main-font-size: 30px;
+}
+
+.reveal img.table-example {
+    float: right;
+    margin-right: 100px;
+}
